@@ -1,143 +1,52 @@
 import streamlit as st
-import config
+from datetime import datetime
 
-def apply_theme():
-    st.markdown(f"""
-        <style>
-        /* Responsive Design - Auto-scale for all devices */
-        @media (max-width: 768px) {{
-            .main > div {{
-                padding-left: 10px;
-                padding-right: 10px;
-            }}
-            h1 {{ font-size: 1.5rem !important; }}
-            h2 {{ font-size: 1.3rem !important; }}
-            h3 {{ font-size: 1.1rem !important; }}
-            .stButton > button {{
-                width: 100%;
-                font-size: 14px;
-            }}
-            .stTextInput > div > input,
-            .stSelectbox > div > select {{
-                font-size: 14px;
-            }}
-        }}
-        
-        @media (max-width: 480px) {{
-            h1 {{ font-size: 1.3rem !important; }}
-            h2 {{ font-size: 1.1rem !important; }}
-            .css-1r6slb0 {{
-                padding: 0.5rem;
-            }}
-        }}
-        
-        /* Main container */
-        .main {{
-            background-color: #f5f5f5;
-        }}
-        
-        /* Sidebar */
-        .css-1d391kg {{
-            background-color: {config.COLOR_SIDEBAR};
-        }}
-        
-        /* Buttons */
-        .stButton > button {{
-            background-color: {config.COLOR_PRIMARY};
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 24px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }}
-        .stButton > button:hover {{
-            background-color: {config.COLOR_ACCENT};
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }}
-        
-        /* Cards */
-        .metric-card {{
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            border-left: 4px solid {config.COLOR_PRIMARY};
-            margin: 10px 0;
-        }}
-        
-        /* Banner */
-        .banner {{
-            background: linear-gradient(135deg, {config.COLOR_PRIMARY} 0%, {config.COLOR_ACCENT} 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }}
-        
-        /* Footer */
-        .footer {{
-            background-color: {config.COLOR_SIDEBAR};
-            color: white;
-            padding: 20px;
-            text-align: center;
-            border-radius: 8px;
-            margin-top: 50px;
-            font-size: 12px;
-        }}
-        
-        /* Expander */
-        .streamlit-expanderHeader {{
-            background-color: white;
-            border-radius: 8px;
-            padding: 15px;
-        }}
-        
-        /* Mobile-friendly columns */
-        .stColumns > div {{
-            padding: 5px;
-        }}
-        
-        /* Fix for Streamlit Cloud */
-        .stApp {{
-            background-color: #f5f5f5;
-        }}
-        </style>
-    """, unsafe_allow_html=True)
+# ============================================
+# APP METADATA & BRANDING
+# ============================================
+APP_TITLE = "Parking Sticker Management System"
+APP_ICON = "🅿️"
+SOCIETY_NAME = "C-32/33 Poonam Nagar CHS"
+SOCIETY_BUILDINGS = "Buildings C-32 & C-33"
+CONTACT_NUMBER = "+91-12345678"
+COPYRIGHT_TEXT = f"© {datetime.now().year} {SOCIETY_NAME}. All rights reserved."
 
-def render_banner(title="Parking Sticker Management System"):
-    st.markdown(f"""
-        <div class='banner'>
-            <div style='display: flex; align-items: center; gap: 20px;'>
-                <div style='
-                    background: white;
-                    color: {config.COLOR_PRIMARY};
-                    width: 60px; height: 60px;
-                    border-radius: 50%;
-                    display: flex; align-items: center; justify-content: center;
-                    font-size: 36px; font-weight: bold;
-                    flex-shrink: 0;
-                '>P</div>
-                <div style='flex: 1;'>
-                    <h1 style='margin: 0; font-size: 24px;'>{title}</h1>
-                    <p style='margin: 5px 0 0 0; opacity: 0.9; font-size: 14px;'>
-                        C-32/33 Poonam Nagar CHS | Buildings C-32 & C-33
-                    </p>
-                </div>
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
+# ============================================
+# COLOR SCHEME (Fixes the AttributeError)
+# ============================================
+COLOR_PRIMARY = "#1976D2"       # Deep blue - main brand color
+COLOR_ACCENT = "#0D47A1"        # Darker blue - accents and hover states
+COLOR_SIDEBAR = "#1565C0"       # Sidebar background color (REQUIRED TO FIX ERROR)
+COLOR_FOOTER = "#0D47A1"        # Footer background color
+COLOR_PRIMARY_LIGHT = "#42A5F5" # Light blue - backgrounds and highlights
+COLOR_SUCCESS = "#4CAF50"       # Green - success messages
+COLOR_ERROR = "#F44336"         # Red - error messages
+COLOR_WARNING = "#FF9800"       # Orange - warning messages
+COLOR_INFO = "#2196F3"          # Blue - info messages
+COLOR_TEXT = "#333333"          # Dark gray for text
+COLOR_BACKGROUND = "#F5F5F5"    # Light gray for main background
 
-def render_footer():
-    st.markdown(f"""
-        <div class='footer'>
-            <p style='margin: 0;'>
-                © C-32/33 Poonam Nagar CHS | Unauthorized use, duplication or transfer is strictly prohibited and punishable under society bylaws.
-            </p>
-            <p style='margin: 5px 0 0 0; opacity: 0.8;'>
-                Buildings C-32 & C-33 | Contact: +91-12345678
-            </p>
-        </div>
-    """, unsafe_allow_html=True)
+# ============================================
+# APP SETTINGS & LAYOUT
+# ============================================
+BUILDINGS = ["C-32", "C-33"]
+# Generates flat numbers from 001 to 200
+ALL_FLAT_NUMBERS = [str(i).zfill(3) for i in range(1, 201)] 
+VEHICLE_TYPES = ["Car", "Bike", "Scooter", "Auto", "Truck"]
+STICKER_COLORS = ["blue", "red", "green", "gold", "purple", "orange"]
+MEMBER_STATUS_OPTIONS = ["Active", "Blocked"]
+STICKER_STATUS_OPTIONS = ["Active", "Blocked", "Expired"]
+VALIDITY_PERIODS_MONTHS = [1, 3, 6, 12, 24, 36]
+
+# ============================================
+# LOGIN CREDENTIALS (Demo / Default)
+# ============================================
+ADMIN_EMAIL = "admin@society.com"
+ADMIN_PASSWORD = "admin123"
+
+# ============================================
+# GOOGLE APPS SCRIPT CONFIGURATION
+# ============================================
+# Note: It is highly recommended to put this in Streamlit Secrets,
+# but keeping it here as a fallback.
+APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBCLs4Coc-Ow5zV7Vzpev-qJHwIJyP3x6Yom3LbeawZGhK-vOcYamtG3ffa_DVKuDKkA/exec"
