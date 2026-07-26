@@ -27,6 +27,25 @@ COLOR_TEXT = "#333333"          # Dark gray for text
 COLOR_BACKGROUND = "#F5F5F5"    # Light gray for main background
 
 # ============================================
+# ADDITIONAL COLOR VARIABLES
+# ============================================
+COLOR_SECONDARY = "#0D47A1"  # Same as COLOR_ACCENT
+COLOR_BACKGROUND = "#F5F5F5"
+COLOR_TEXT = "#333333"
+
+# ============================================
+# BASE URL FOR QR CODES
+# ============================================
+# This will be updated dynamically, but set a default
+BASE_VERIFY_URL = "https://parking-sticker-system-ou7pk mfjuvehgx8kmsg9mg.streamlit.app"
+
+# ============================================
+# QR CODE SETTINGS
+# ============================================
+QR_CODE_SIZE = 300
+QR_CODE_BORDER = 2
+
+# ============================================
 # APP SETTINGS & LAYOUT
 # ============================================
 BUILDINGS = ["C-32", "C-33"]
