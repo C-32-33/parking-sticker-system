@@ -74,7 +74,7 @@ def get_base64_image(img_bytes):
 # --- UI Header ---
 st.markdown(f"""<div style='background: linear-gradient(135deg, {config.COLOR_PRIMARY} 0%, {config.COLOR_SECONDARY} 100%); padding: 20px 30px; border-radius: 12px; margin-bottom: 25px; text-align: center;'>
     <h1 style='color: white; margin: 0;'>🔍 Sticker Verification</h1>
-    <p style='color: #E3F2FD; margin: 5px 0 0 0;'>{config.SOCIETY_NAME} - {config.SOCIETY_ADDRESS}</p>
+    <p style='color: #E3F2FD; margin: 5px 0 0 0;'>{config.SOCIETY_NAME} - {config.SOCIETY_BUILDINGS}</p>
 </div>""", unsafe_allow_html=True)
 
 col1, col2 = st.columns([1, 1])
