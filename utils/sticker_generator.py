@@ -7,7 +7,6 @@ import random
 import qrcode
 
 def get_font(size):
-    # Try standard Linux/Windows/Mac fonts
     font_paths = [
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
         "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
@@ -20,9 +19,6 @@ def get_font(size):
                 return ImageFont.truetype(path, size)
             except:
                 continue
-    
-    # CRITICAL FIX: Use Pillow's built-in default font with specific size
-    # This ensures text is ALWAYS large, even on Streamlit Cloud
     try:
         return ImageFont.load_default(size=size)
     except:
@@ -63,25 +59,24 @@ class StickerGenerator:
             }
             main_color = color_map.get(color, (204, 0, 0))
 
-            # Outer Red Rings
-            draw.ellipse([(30, 30), (draw_size[0]-30, draw_size[1]-30)], fill=white)
-            draw.ellipse([(70, 70), (draw_size[0]-70, draw_size[1]-70)], fill=main_color)
-            draw.ellipse([(110, 110), (draw_size[0]-110, draw_size[1]-110)], outline=white, width=16)
+            # Outer Rings (Slightly larger to ensure content fits)
+            draw.ellipse([(50, 50), (draw_size[0]-50, draw_size[1]-50)], fill=white)
+            draw.ellipse([(90, 90), (draw_size[0]-90, draw_size[1]-90)], fill=main_color)
+            draw.ellipse([(130, 130), (draw_size[0]-130, draw_size[1]-130)], outline=white, width=16)
 
-            # QR Code Placement
-            qr_size = 1300
+            # QR Code Placement - MOVED UP
+            qr_size = 1100 # Slightly smaller to fit better
             qr_img_resized = qr_img.resize((qr_size, qr_size), Image.Resampling.LANCZOS)
             
             qr_x = center_x - qr_size // 2
-            qr_y = 450 
+            qr_y = 350 # MOVED UP from 450
             img.paste(qr_img_resized, (qr_x, qr_y))
 
-            # 4. ADD CENTER LOGO (Car or Bike Image)
-            logo_size = 350
+            # 4. ADD CENTER LOGO
+            logo_size = 300 # Slightly smaller
             logo_cx = center_x
             logo_cy = qr_y + (qr_size // 2)
             
-            # Determine which logo to load
             v_type = vehicle_type.lower() if vehicle_type else "car"
             logo_path = "logos/bike.png" if ("bike" in v_type or "scooter" in v_type) else "logos/car.png"
             
@@ -89,32 +84,30 @@ class StickerGenerator:
             logo_y = logo_cy - logo_size // 2
 
             if os.path.exists(logo_path):
-                # Load and paste the image logo
                 logo_img = Image.open(logo_path).convert("RGBA")
                 logo_img = logo_img.resize((logo_size, logo_size), Image.Resampling.LANCZOS)
-                img.paste(logo_img, (logo_x, logo_y), logo_img) # Paste with transparency
+                img.paste(logo_img, (logo_x, logo_y), logo_img)
             else:
-                # Fallback: Draw a red circle with text if image is missing
                 draw.ellipse([(logo_x, logo_y), (logo_x + logo_size, logo_y + logo_size)], fill=main_color)
                 draw.text((logo_cx, logo_cy), "CAR" if "car" in v_type else "BIKE", fill=white, font=get_font(100), anchor="mm")
 
-            # 5. LARGE "PARKING PERMIT" TEXT
-            label_font = get_font(140) # Increased size
-            text_y = qr_y + qr_size + 100
+            # 5. LARGE "PARKING PERMIT" TEXT - MOVED UP
+            label_font = get_font(130) 
+            text_y = qr_y + qr_size + 60 # MOVED UP
             draw.text((center_x, text_y), "PARKING PERMIT", fill=white, font=label_font, anchor="mm")
 
-            # 6. LARGE STICKER ID IN PILL SHAPE
-            id_font = get_font(200) # Increased size significantly
+            # 6. LARGE STICKER ID IN PILL SHAPE - MOVED UP
+            id_font = get_font(180) 
             id_bbox = id_font.getbbox(sticker_id)
             id_text_w = id_bbox[2] - id_bbox[0]
             id_text_h = id_bbox[3] - id_bbox[1]
             
-            pill_padding_x = 120
-            pill_padding_y = 60
+            pill_padding_x = 100
+            pill_padding_y = 40
             pill_w = id_text_w + pill_padding_x * 2
             pill_h = id_text_h + pill_padding_y * 2
             pill_x = center_x - pill_w // 2
-            pill_y = text_y + 150
+            pill_y = text_y + 140 # MOVED UP
 
             # White Pill Background
             draw.rounded_rectangle([(pill_x, pill_y), (pill_x + pill_w, pill_y + pill_h)], radius=pill_h // 2, fill=white)
