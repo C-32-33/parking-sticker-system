@@ -46,7 +46,7 @@ if not st.session_state.get("authenticated"):
         """, unsafe_allow_html=True)
         
         st.write("")
-        username = st.text_input(" Username", placeholder="Enter username")
+        username = st.text_input("👤 Username", placeholder="Enter username")
         password = st.text_input("🔑 Password", type="password")
         
         if st.button("Login", use_container_width=True, type="primary"):
@@ -102,7 +102,7 @@ else:
                     display: flex; align-items: center; justify-content: center;
                     font-size: 30px; font-weight: bold;
                     margin: 0 auto 10px auto;
-                '></div>
+                '>👤</div>
                 <h3 style='margin: 0;'>{st.session_state.username}</h3>
                 <p style='margin: 5px 0; font-size: 13px; color: #666;'>Role: {st.session_state.user_role}</p>
             </div>
@@ -112,15 +112,15 @@ else:
         
         # ALL users can see these (Read-only access)
         st.page_link("pages/1_Dashboard.py", label="📊 Dashboard", icon="📊")
-        st.page_link("pages/3_Verify_Sticker.py", label="🔍 Verify Sticker", icon="")
+        st.page_link("pages/3_Verify_Sticker.py", label=" Verify Sticker", icon="🔍")
         st.page_link("pages/6_Public_Verify.py", label="🌐 Public Verify", icon="🌐")
-        st.page_link("pages/7_Sticker_Viewer.py", label="🔎 Sticker Viewer", icon="")
+        st.page_link("pages/7_Sticker_Viewer.py", label="🔎 Sticker Viewer", icon="🔎")
         
         # Committee and Admin can see these (Add & Generate)
         if st.session_state.user_role in ["Admin", "Committee"]:
             st.markdown("---")
             st.markdown("**Management**")
-            st.page_link("pages/2_Generate_Stickers.py", label="🎫 Generate Stickers", icon="🎫")
+            st.page_link("pages/2_Generate_Stickers.py", label="🎫 Generate Stickers", icon="")
             st.page_link("pages/4_Manage_Members.py", label="👥 Manage Members", icon="👥")
         
         # Only Admin can see these
@@ -128,7 +128,7 @@ else:
             st.markdown("---")
             st.markdown("**Admin Panel**")
             st.page_link("pages/5_Reports.py", label="📈 Reports", icon="📈")
-            st.page_link("pages/8_User_Management.py", label="👨💼 User Management", icon="👨💼")
+            st.page_link("pages/8_User_Management.py", label="👨‍💼 User Management", icon="👨‍💼")
         
         st.markdown("---")
         
@@ -146,7 +146,7 @@ else:
     with c1:
         st.metric("👥 Total Members", len(members))
     with c2:
-        st.metric("🎫 Total Stickers", len(stickers))
+        st.metric(" Total Stickers", len(stickers))
     with c3:
         active = len([s for s in stickers if s.get("Status") == "Active"])
         st.metric("✅ Active Stickers", active)
@@ -166,12 +166,12 @@ else:
             <h3 style='color: {config.COLOR_PRIMARY};'>🚀 Quick Actions</h3>
             <ul style='line-height: 2; color: #37474F;'>
                 <li><b>📊 Dashboard</b> - View building-wise vehicle summary & stats</li>
-                <li><b> Manage Members</b> - Add members, block/delete, and manage details</li>
+                <li><b>👥 Manage Members</b> - Add members, block/delete, and manage details</li>
                 <li><b>🎫 Generate Stickers</b> - Create parking stickers with QR codes</li>
-                <li><b>🔍 Verify Sticker</b> - Staff verification with full member details</li>
+                <li><b> Verify Sticker</b> - Staff verification with full member details</li>
                 <li><b>🌐 Public Verify</b> - Public QR scan verification page</li>
                 <li><b>📈 Reports</b> - View scan logs, download Excel reports, and manage stickers</li>
-                <li><b> Sticker Viewer</b> - Search, filter, and download generated stickers</li>
+                <li><b>🔎 Sticker Viewer</b> - Search, filter, and download generated stickers</li>
             </ul>
         </div>
     """, unsafe_allow_html=True)
