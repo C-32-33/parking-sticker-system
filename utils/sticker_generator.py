@@ -50,7 +50,7 @@ class StickerGenerator:
             draw.ellipse([(70, 70), (draw_size[0]-70, draw_size[1]-70)], fill=main_color)
             draw.ellipse([(110, 110), (draw_size[0]-110, draw_size[1]-110)], outline=white, width=16)
 
-            # QR Code - MOVED UP MORE to make room for text
+            # QR Code - CENTERED
             qr_img = QRGenerator.generate_qr_pil(sticker_id, add_logo=True)
             if qr_img:
                 qr_size = 1240
@@ -60,14 +60,21 @@ class StickerGenerator:
                 qr_bg = Image.new('RGB', (qr_bg_size, qr_bg_size), white)
                 qr_bg.paste(qr_img, (qr_padding, qr_padding))
                 qr_x = center_x - qr_bg_size // 2
-                qr_y = center_y - qr_bg_size // 2 - 180  # MOVED UP MORE (was -120)
+                qr_y = center_y - qr_bg_size // 2
                 img.paste(qr_bg, (qr_x, qr_y))
 
-            # Sticker ID & Label - ADJUSTED POSITIONING
+            # Sticker ID & Label - CORRECTED POSITIONING
             id_font = get_font(124)
             label_font = get_font(56)
-            id_y = center_y + qr_size // 2 + 60  # MOVED UP (was +120)
             
+            # Position text and ID 20% below the QR code
+            text_y = center_y + qr_size // 2 + 100
+            id_y = text_y + 80
+            
+            # Draw "PARKING PERMIT" text
+            draw.text((center_x, text_y), "PARKING PERMIT", fill=white, font=label_font, anchor="mm")
+            
+            # Draw Sticker ID
             id_bbox = id_font.getbbox(sticker_id)
             id_text_w = id_bbox[2] - id_bbox[0]
             id_text_h = id_bbox[3] - id_bbox[1]
@@ -80,7 +87,6 @@ class StickerGenerator:
             pill_y = id_y - pill_padding_y
 
             draw.rounded_rectangle([(pill_x, pill_y), (pill_x + pill_w, pill_y + pill_h)], radius=pill_h // 2, fill=white)
-            draw.text((center_x, pill_y - 50), "PARKING PERMIT", fill=white, font=label_font, anchor="mm")
             draw.text((center_x, id_y + id_text_h // 2), sticker_id, fill=main_color, font=id_font, anchor="mm")
 
             final_img = img.resize(final_size, Image.Resampling.LANCZOS)
