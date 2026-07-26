@@ -69,3 +69,17 @@ ADMIN_PASSWORD = "admin123"
 # Note: It is highly recommended to put this in Streamlit Secrets,
 # but keeping it here as a fallback.
 APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBCLs4Coc-Ow5zV7Vzpev-qJHwIJyP3x6Yom3LbeawZGhK-vOcYamtG3ffa_DVKuDKkA/exec"
+
+# Add these to your config.py
+
+# App URL (Replace with your actual Streamlit Cloud URL)
+APP_URL = "https://parking-sticker-system-ou7pkmfjuvehgx8kmsg9mg.streamlit.app" # <-- REMOVE SPACES FROM YOUR URL
+
+# Sticker ID Generation Settings
+STICKER_ID_CHARSET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+STICKER_ID_LENGTH = 8
+
+# Missing color variables from previous errors
+COLOR_SECONDARY = "#0D47A1"
+COLOR_BACKGROUND = "#F5F5F5"
+COLOR_TEXT = "#333333"
