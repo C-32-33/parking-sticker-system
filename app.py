@@ -120,7 +120,7 @@ else:
         if st.session_state.user_role in ["Admin", "Committee"]:
             st.markdown("---")
             st.markdown("**Management**")
-            st.page_link("pages/2_Generate_Stickers.py", label="🎫 Generate Stickers", icon="")
+            st.page_link("pages/2_Generate_Stickers.py", label="🎫 Generate Stickers", icon="🎫")
             st.page_link("pages/4_Manage_Members.py", label="👥 Manage Members", icon="👥")
         
         # Only Admin can see these
