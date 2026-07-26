@@ -4,3 +4,4 @@ requests
 qrcode[pil]
 Pillow
 xlsxwriter
+streamlit-camera-input-live
