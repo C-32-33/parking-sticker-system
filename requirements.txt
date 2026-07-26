@@ -1,0 +1,6 @@
+streamlit
+pandas
+requests
+qrcode[pil]
+Pillow
+xlsxwriter
