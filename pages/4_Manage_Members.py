@@ -5,6 +5,17 @@ import config
 import pandas as pd
 from datetime import datetime
 
+
+if not st.session_state.get("authenticated"):
+    st.error("Please login first")
+    st.stop()
+
+# Only Admin and Committee can manage members
+if st.session_state.user_role not in ["Admin", "Committee"]:
+    st.error("🚫 Access Denied. This page requires Admin or Committee privileges.")
+    st.stop()
+
+
 st.set_page_config(page_title="Manage Members", page_icon="👥", layout="wide")
 apply_theme()
 
