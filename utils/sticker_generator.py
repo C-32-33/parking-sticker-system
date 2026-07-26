@@ -6,12 +6,12 @@ import os
 import random
 import qrcode
 
-def get_font(size):
+def get_font(size, bold=True):
     font_paths = [
-        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
-        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf" if bold else "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf" if bold else "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
         "/System/Library/Fonts/Helvetica.ttc",
-        "C:\\Windows\\Fonts\\arialbd.ttf",
+        "C:\\Windows\\Fonts\\arialbd.ttf" if bold else "C:\\Windows\\Fonts\\arial.ttf",
     ]
     for path in font_paths:
         if os.path.exists(path):
@@ -62,11 +62,11 @@ class StickerGenerator:
             draw.ellipse([(100, 100), (2300, 2300)], fill=main_color)
             draw.ellipse([(150, 150), (2250, 2250)], outline=white, width=20)
             
-            # 4. INCREASED QR Code Size (was 1000, now 1150)
-            qr_size = 1150
+            # 4. LARGER QR Code (1250px, moved up to y=320)
+            qr_size = 1250
             qr_img = qr_img.resize((qr_size, qr_size), Image.Resampling.LANCZOS)
             qr_x = center_x - qr_size // 2
-            qr_y = 400  # Slightly higher to accommodate larger QR
+            qr_y = 320  # Moved up to make room for larger QR
             img.paste(qr_img, (qr_x, qr_y))
             
             # 5. Superimpose Logo - PRESERVE ASPECT RATIO
@@ -80,8 +80,7 @@ class StickerGenerator:
                 orig_width, orig_height = logo.size
                 
                 # Calculate new size maintaining aspect ratio
-                # Target: fit within 300x300 box
-                max_size = 300
+                max_size = 320  # Slightly larger logo
                 ratio = min(max_size / orig_width, max_size / orig_height)
                 new_width = int(orig_width * ratio)
                 new_height = int(orig_height * ratio)
@@ -95,27 +94,28 @@ class StickerGenerator:
                 # Paste with transparency
                 img.paste(logo, (logo_x, logo_y), logo)
             
-            # 6. INCREASED Text Sizes
-            label_font = get_font(110)  # was 100
-            text_y = qr_y + qr_size + 100
+            # 6. "PARKING PERMIT" Text - PUSHED DOWN
+            label_font = get_font(120, bold=True)
+            text_y = qr_y + qr_size + 120  # Pushed down from 100 to 120
             draw.text((center_x, text_y), "PARKING PERMIT", fill=white, font=label_font, anchor="mm")
             
-            # 7. INCREASED Sticker ID (was 140, now 170)
-            id_font = get_font(170)
+            # 7. LARGER, BOLDER Sticker ID (200px font)
+            id_font = get_font(200, bold=True)  # Increased from 170 to 200
             id_bbox = id_font.getbbox(sticker_id)
             id_text_w = id_bbox[2] - id_bbox[0]
             id_text_h = id_bbox[3] - id_bbox[1]
             
-            pill_padding_x = 90  # Increased padding
-            pill_padding_y = 40
+            pill_padding_x = 100  # Increased padding
+            pill_padding_y = 45
             pill_w = id_text_w + pill_padding_x * 2
             pill_h = id_text_h + pill_padding_y * 2
             pill_x = center_x - pill_w // 2
-            pill_y = text_y + 130
+            pill_y = text_y + 140  # Pushed down from 130 to 140
             
-            # White pill background
+            # White pill background with subtle shadow effect
+            draw.rounded_rectangle([(pill_x-5, pill_y-5), (pill_x + pill_w+5, pill_y + pill_h+5)], radius=pill_h // 2, fill=(0, 0, 0, 50))
             draw.rounded_rectangle([(pill_x, pill_y), (pill_x + pill_w, pill_y + pill_h)], radius=pill_h // 2, fill=white)
-            # Bold colored ID text
+            # Extra bold colored ID text
             draw.text((center_x, pill_y + pill_h // 2), sticker_id, fill=main_color, font=id_font, anchor="mm")
             
             # 8. Finalize
