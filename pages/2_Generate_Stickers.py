@@ -5,6 +5,16 @@ from utils.theme import apply_theme, render_banner, render_footer
 import config
 from datetime import datetime, timedelta
 
+if not st.session_state.get("authenticated"):
+    st.error("Please login first")
+    st.stop()
+
+# Only Admin and Committee can generate stickers
+if st.session_state.user_role not in ["Admin", "Committee"]:
+    st.error("🚫 Access Denied. This page requires Admin or Committee privileges.")
+    st.stop()
+
+
 st.set_page_config(page_title="Generate Stickers", page_icon="", layout="wide")
 apply_theme()
 
